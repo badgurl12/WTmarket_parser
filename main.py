@@ -1,26 +1,24 @@
 from bs4 import BeautifulSoup
-from auth import html
-
+from auth import stripHTML
 
 #with open('Gaijin Market.html') as html_file:
-soup = BeautifulSoup(html, 'html.parser')
+soup = BeautifulSoup(stripHTML(), 'html.parser')
 
 # define an empty array to store the divs with the desired class and their spans with desired class
 vehicles_array = []
 
-# loop through all the divs in the HTML document that have the desired class (e.g. 'my-class')
-for div in soup.find_all('div', class_='lot'):
+# loop through the document finding prices
+def find_sell_prices():
 
-    name = div.find('div', class_='name')
-    if name is not None:
-        
-          
-        
-        for span in div.find('span', class_='price'):
-            price = span.text
+    for div in soup.find_all('div', class_='lot inventory'):
 
-   
-        vehicles_array.append([name.text, price])
+        name = div.find('div', class_='name')
+        price_span = div.find('span', class_='price')
+
+        if name is not None and price_span is not None:
+            price = price_span.text
+            vehicles_array.append([name.text, price])
+
+find_sell_prices()
 
 print(vehicles_array)
-

@@ -11,11 +11,12 @@ dp = Dispatcher(bot)
 # Define your function to handle the button click
 @dp.callback_query_handler(lambda c: c.data == 'show_array')
 async def process_callback_show_array(callback_query: types.CallbackQuery):
-    # Convert the array to a string
-    array_string = '\n'.join(map(str, vehicles_array))
-    # Send the array string as a message
-    await bot.send_message(callback_query.from_user.id, f"{array_string}")
 
+    array_string = "ITEM\tPRICE\n"
+    # Format each element in the array as a string in the desired format
+    array_string = '\n'.join([f"{elem[0]}: {elem[1]}" for elem in vehicles_array])
+    # Send the array string as a message
+    await bot.send_message(callback_query.from_user.id, array_string)
 # Define your function to handle the button click
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):

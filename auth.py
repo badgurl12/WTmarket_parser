@@ -2,10 +2,16 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.firefox.options import Options
 import time
 
 # create a Firefox webdriver instance
 driver = webdriver.Firefox()
+
+# function to write HTML code to a variable
+def stripHTML():
+    html = driver.page_source
+    return html
 
 # navigate to trade.gaijin.net
 driver.get("https://trade.gaijin.net/")
@@ -30,9 +36,12 @@ login_button.click()
 wait = WebDriverWait(driver, 10)
 wait.until(EC.element_to_be_clickable((By.ID, "searchInput")))
 
+time.sleep(2)
+
 buyorderbutton = driver.find_element(By.XPATH, "/html/body/div/div/div/div/div[1]/div[3]/div[1]/div/div/div[1]/div/ul[1]/li[3]/a/div")
-buyorderbutton.click()
+#buyorderbutton.click()
+
+stripHTML()
 
 
 
-html = driver.page_source
